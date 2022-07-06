@@ -3,24 +3,37 @@
  * на сервер.
  * */
 const createRequest = (options = {}) => {
+  if (options === {}) {
+    throw new Error('Не переданы параметры для createRequest');
+  }
+  const xhr = new XMLHttpRequest();
+  xhr.responseType = 'json';
 
+  let {
+    url,
+    data,
+    method,
+    callback
+  } = options;
+  xhr.open(method, url);
+  if (!data) {
+      xhr.send();
+  } else {
+    let formData = new FormData();
+    for (let [key, value] of Object.entries(data)){
+      formData.append(key, value);
+    }
+    console.log(formData);
+      xhr.send(formData);
+  }
+
+  const resp = xhr.response;
+  console.log(resp);
+
+  //------------------тестить отсюда
+  // if (resp.error) {
+  //   options.callback(resp.error);
+  // } else {
+  //   options.callback(null, resp);
+  // }
 };
-
-// createRequest({
-//     url: 'https://example.com', // адрес
-//     data: { // произвольные данные, могут отсутствовать
-//       email: 'ivan@poselok.ru',
-//       password: 'odinodin'
-//     },
-//     method: 'GET', // метод запроса
-//     /*
-//       Функция, которая сработает после запроса.
-//       Если в процессе запроса произойдёт ошибка, её объект
-//       должен быть в параметре err.
-//       Если в запросе есть данные, они должны быть переданы в response.
-//     */
-//     callback: (err, response) => {
-//       console.log( 'Ошибка, если есть', err );
-//       console.log( 'Данные, если нет ошибки', response );
-//     }
-//   });

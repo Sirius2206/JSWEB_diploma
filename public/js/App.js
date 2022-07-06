@@ -46,7 +46,7 @@ class App {
 
   /**
    * Инициализирует всплывающие окна
-   * */
+   * */ 
   static initModals() {
     this.modals = {
       register: new Modal(document.querySelector("#modal-register")),
