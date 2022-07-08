@@ -3,11 +3,9 @@
  * на сервер.
  * */
 const createRequest = (options = {}) => {
-  if (options === {}) {
+  if (!options) {
     throw new Error('Не переданы параметры для createRequest');
   }
-  const xhr = new XMLHttpRequest();
-  xhr.responseType = 'json';
 
   let {
     url,
@@ -15,6 +13,9 @@ const createRequest = (options = {}) => {
     method,
     callback
   } = options;
+
+  const xhr = new XMLHttpRequest();
+  xhr.responseType = 'json';
   xhr.open(method, url);
   if (!data) {
       xhr.send();
@@ -27,13 +28,15 @@ const createRequest = (options = {}) => {
       xhr.send(formData);
   }
 
-  const resp = xhr.response;
-  console.log(resp);
-
-  //------------------тестить отсюда
-  // if (resp.error) {
-  //   options.callback(resp.error);
-  // } else {
-  //   options.callback(null, resp);
-  // }
+  xhr.onloadend = () => {
+    const resp = JSON.parse(xhr.response);
+    console.log(resp);
+    
+      // ------------------тестить отсюда
+      if (resp?.error) {
+        options.callback(resp.error);
+      } else {
+        options.callback(null, resp);
+      }
+  }
 };

@@ -98,14 +98,17 @@ class User {
     const request = {};
     request.url = this.URL + '/logout';
     request.method = 'POST';
+    
     request.callback = (err, response) => {
-      try {
-        if (response.success) {
+      console.log(response);
+        if (err) {
+          callback(err);
+        } else {
+          console.log("Current before: " + this.current());
           this.unsetCurrent();
+          console.log("Current after: " + this.current())
+          // callback();
         }
-      } catch (e) {
-        callback(e);
-      }
     }
     createRequest(request);
   }

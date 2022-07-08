@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { PORT, PUBLIC_PATH, INDEX_FILE } = process.env;
+const {PORT, PUBLIC_PATH, INDEX_FILE } = process.env;
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');

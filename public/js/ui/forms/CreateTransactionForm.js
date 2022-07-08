@@ -1,3 +1,4 @@
+
 /**
  * Класс CreateTransactionForm управляет формой
  * создания новой транзакции
@@ -9,6 +10,7 @@ class CreateTransactionForm extends AsyncForm {
    * */
   constructor(element) {
     super(element)
+    this.renderAccountsList();
   }
 
   /**
@@ -16,7 +18,7 @@ class CreateTransactionForm extends AsyncForm {
    * Обновляет в форме всплывающего окна выпадающий список
    * */
   renderAccountsList() {
-
+    AccountsWidget.list();
   }
 
   /**
@@ -26,6 +28,14 @@ class CreateTransactionForm extends AsyncForm {
    * в котором находится форма
    * */
   onSubmit(data) {
+    function callback (error) {
+      if (error) {
+        console.log(error);
+      } else {
+        App.update();
+      }
+    }
+    Transaction.create(data);
 
   }
 }
