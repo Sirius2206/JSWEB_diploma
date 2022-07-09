@@ -12,7 +12,7 @@ class TransactionsPage {
    * */
   constructor(element) {
     if (!element) {
-      throw new Error("Передан пустой элемент в TranssactionsPage");
+      throw new Error("Передан пустой элемент в TransactionsPage");
     }
     this.element = element;
     this.registerEvents();
@@ -33,8 +33,7 @@ class TransactionsPage {
    * */
   registerEvents() {
     document.querySelector('.remove-account').addEventListener('click', () => this.removeAccount());
-    const rmvTransaction = document.querySelector('.transaction__remove');
-    rmvTransaction.addEventListener('click', () => this.removeTransaction(rmvTransaction.dataset.id));
+    // document.querySelector('.transaction__remove').addEventListener('click', () => this.removeTransaction(rmvTransaction.dataset.id));
   }
 
   /**
@@ -70,6 +69,7 @@ class TransactionsPage {
   removeTransaction(id) {
     const decision = confirm('Вы действительно хотите удалить эту транзакцию?');
     if (!decision) return;
+
     function callback(error, response) {
       if (error) {
         console.log(error);
@@ -88,18 +88,26 @@ class TransactionsPage {
    * */
   render(options) {
     if (!options) return;
+    this.lastOptions = options;
 
-    function callback (error, response) {
+    function callback(error, response) {
       if (error) {
         console.log(error);
       } else {
-        // С помощью Account.get() получает название счёта и отображает его через TransactionsPage.renderTitle.
-        TransactionsPage.renderTitle(обработать ответ);
+        this.renderTitle(response.data.name);
       }
     }
-    this.lastOptions = options;
     Account.get(options.account_id, callback);
-    Transaction.list(здесь список, callback);
+
+    function callback(error, response) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(response)
+        this.renderTransactions(response.data);
+      }
+    }
+    Transaction.list(options.account_id, callback);
   }
 
   /**
@@ -138,13 +146,13 @@ class TransactionsPage {
       "октября",
       "ноября",
       "декабря"
-  ]
-  const regex = /(\d{4})-(\d\d)-(\d\d) (\d\d:\d\d)/;
-  const result = date.match(regex);
-  if (result[2].startsWith('0')) {
+    ]
+    const regex = /(\d{4})-(\d\d)-(\d\d) (\d\d:\d\d)/;
+    const result = date.match(regex);
+    if (result[2].startsWith('0')) {
       result[2] = result[2][1];
-  }
-  return `${result[3]} ${months[result[2] - 1]} ${result[1]} г. в ${result[4]}`;
+    }
+    return `${result[3]} ${months[result[2] - 1]} ${result[1]} г. в ${result[4]}`;
   }
 
   /**
@@ -152,7 +160,7 @@ class TransactionsPage {
    * item - объект с информацией о транзакции
    * */
   getTransactionHTML(item) {
-const resultHTML = `<div class="transaction transaction_${item.type} row">
+    const resultHTML = `<div class="transaction transaction_${item.type} row">
 <div class="col-md-7 transaction__details">
   <div class="transaction__icon">
       <span class="fa fa-money fa-2x"></span>
@@ -176,7 +184,7 @@ const resultHTML = `<div class="transaction transaction_${item.type} row">
     </button>
 </div>
 </div>`
-return resultHTML;
+    return resultHTML;
   }
 
   /**
@@ -184,10 +192,15 @@ return resultHTML;
    * используя getTransactionHTML
    * */
   renderTransactions(data) {
-    let resultHTML ='';
+    let resultHTML = '';
     for (let item of data) {
       resultHTML += this.getTransactionHTML(item);
     }
-    document.querySelector('.content-wrapper').querySelector('.content').innerHTML = resultHTML;
+    this.element.querySelector('.content').innerHTML = resultHTML;
+
+    // const content = this.element.querySelector('.content');
+    // content.textContent = '';
+
+    // content.insertAdjacentHTML('beforeend', html);
   }
 }

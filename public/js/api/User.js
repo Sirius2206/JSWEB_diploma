@@ -9,9 +9,9 @@ class User {
    * локальном хранилище.
    * */
   static URL = '/user';
-  static setCurrent( user ) {
-    console.log("Вызван User.setCurrent;");
-    localStorage.setItem( 'user', user );
+  static setCurrent(user) {
+    console.log("Вызван User.setCurrent:" + user.name);
+    localStorage.setItem('user', user.name);
   }
 
   /**
@@ -28,7 +28,7 @@ class User {
    * из локального хранилища
    * */
   static current() {
-    console.log("Вызван User.current");
+    console.log("Вызван User.current: " + localStorage.getItem('user'));
     return localStorage.getItem('user');
   }
 
@@ -38,18 +38,22 @@ class User {
    * */
   static fetch(callback) {
     console.log('Вызван fetch в User.fetch');
-    const request = {};
-    request.method = 'GET';
-    request.url = this.URL + '/current';
-    request.callback = ( err, response ) => {
-      if (response && response.user) {
-        User.setCurrent(response.user);
-      } else {
-        User.unsetCurrent();
+
+    createRequest({
+      method: 'GET',
+      url: this.URL + '/current',
+      callback: (err, response) => {
+        if (err) {
+          console.log(err);
+        }
+        if (response && response.user) {
+          User.setCurrent(response.user);
+        } else {
+          User.unsetCurrent();
+        }
+        callback(err, response);
       }
-      // callback(err, response);
-    }
-    createRequest(request);
+    });
   }
 
   /**
@@ -82,12 +86,12 @@ class User {
    * */
   static register(data, callback) {
     console.log("Вызван register на регистрации в User.register")
-    const request = {};
-    request.data = data;
-    request.method = 'POST';
-    request.url = this.URL + '/register';
-    request.callback = callback;
-    createRequest(request);
+    createRequest({
+      data: data,
+      method: 'POST',
+      url: this.URL + '/register',
+      callback: callback
+    });
   }
 
   /**
@@ -95,21 +99,19 @@ class User {
    * выхода необходимо вызвать метод User.unsetCurrent
    * */
   static logout(callback) {
-    const request = {};
-    request.url = this.URL + '/logout';
-    request.method = 'POST';
-    
-    request.callback = (err, response) => {
-      console.log(response);
+    createRequest({
+      data: User.current(),
+      url: this.URL + '/logout',
+      method: 'POST',
+      callback: (err, response) => {
+        console.log(response);
         if (err) {
           callback(err);
         } else {
-          console.log("Current before: " + this.current());
           this.unsetCurrent();
-          console.log("Current after: " + this.current())
-          // callback();
+          App.setState('init');
         }
-    }
-    createRequest(request);
+      }
+    });
   }
 }

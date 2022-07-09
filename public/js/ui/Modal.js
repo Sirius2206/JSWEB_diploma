@@ -15,7 +15,6 @@ class Modal {
     if (element === '') {
       throw new Error('Передан пустой элемент');
     }
-    console.log(element);
     this.element = element;
     this.registerEvents();
   }
@@ -28,7 +27,6 @@ class Modal {
   registerEvents() {
     const elems = Array.from(this.element.querySelectorAll("[data-dismiss = 'modal']"))
     for ( let item of elems ) {
-      console.log(item);
       item.addEventListener('click', e => {
         this.onClose(e)});
     }

@@ -26,6 +26,7 @@ class UserWidget {
    * */
   update(){
     if (User.current()) {
+      console.log('Это User.current: ' + '');
       document.querySelector('.user-name').textContent = User.current();
     }
   }

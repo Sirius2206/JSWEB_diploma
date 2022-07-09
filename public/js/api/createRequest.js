@@ -3,6 +3,7 @@
  * на сервер.
  * */
 const createRequest = (options = {}) => {
+  console.log("createRequest called")
   if (!options) {
     throw new Error('Не переданы параметры для createRequest');
   }
@@ -16,27 +17,30 @@ const createRequest = (options = {}) => {
 
   const xhr = new XMLHttpRequest();
   xhr.responseType = 'json';
-  xhr.open(method, url);
-  if (!data) {
-      xhr.send();
-  } else {
-    let formData = new FormData();
-    for (let [key, value] of Object.entries(data)){
-      formData.append(key, value);
-    }
-    console.log(formData);
-      xhr.send(formData);
-  }
 
-  xhr.onloadend = () => {
-    const resp = JSON.parse(xhr.response);
-    console.log(resp);
-    
-      // ------------------тестить отсюда
-      if (resp?.error) {
-        options.callback(resp.error);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+      const resp = xhr.response;
+      console.log("onreadystatechange response: " + resp);
+      callback(resp?.error, resp);
+    };
+  };
+
+  let queryParams = '';
+  const formData = new FormData();
+  if (data){
+    console.log("Это дата: " + Object.keys(data));
+    if (method === 'GET') {
+      queryParams = "?" + Object.entries(data).map(
+        ([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+        ).join('&');
       } else {
-        options.callback(null, resp);
+        for (let [key, value] of Object.entries(data)) {
+          formData.append(key, value);
+        }
+        console.log(formData);
       }
-  }
+    }
+    xhr.open(method, url + queryParams);
+    xhr.send(formData);
 };

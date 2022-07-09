@@ -9,15 +9,13 @@ class Entity {
    * Это могут быть счета или доходы/расходы
    * (в зависимости от того, что наследуется от Entity)
    * */
-  static list(data, callback){
-    const request = {};
-    request.data = data;
-    request.url = this.URL + `?account_id=${data}`;
-    request.method = 'GET';
-    request.callback = callback;
-
-    createRequest(request);
-    //--------------------------Что делать с callback'ом?
+  static list(data, callback) {
+    console.log("Entity.list called")
+    createRequest({
+      url: this.URL + `?account_id=${data}`,
+      method: 'GET',
+      callback: callback
+    })
   }
 
   /**
@@ -26,26 +24,26 @@ class Entity {
    * что наследуется от Entity)
    * */
   static create(data, callback) {
-    const request = {};
-    request.data = data;
-    request.url = this.URL;
-    request.method = 'PUT';
-    request.callback = callback;
-    createRequest(request);
-    //--------------------------Что делать с callback'ом?
+    console.log("Entity.create called")
+    createRequest({
+      data: data,
+      url: this.URL,
+      method: 'PUT',
+      callback: callback,
+    })
   }
 
   /**
    * Удаляет информацию о счёте или доходе/расходе
    * (в зависимости от того, что наследуется от Entity)
    * */
-  static remove(data, callback ) {
-    const request = {};
-    request.data = data;
-    request.url = this.URL;
-    request.method = 'DELETE';
-    request.callback = callback;
-    createRequest(request);
-    //--------------------------Что делать с callback'ом?
+  static remove(data, callback) {
+    console.log("Entity.remove called")
+    createRequest({
+      data: data,
+      url: this.URL,
+      method: 'DELETE',
+      callback: callback
+    });
   }
 }

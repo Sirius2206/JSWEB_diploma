@@ -12,13 +12,15 @@ class LoginForm extends AsyncForm {
   onSubmit(data) {
     function callback (error) {
       if (error) {
-        console.log(error);
+        console.error(error);
+        document.querySelector('.error-text_login').innerText = error;
       }else {
         // this.element.reset();
         App.setState('user-logged');
         App.getModal('login').close();
       }
     }
+    console.log('User.login:::::::::::::' + data )
     User.login(data, callback);
   }
 }
