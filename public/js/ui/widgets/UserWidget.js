@@ -15,6 +15,7 @@ class UserWidget {
     if (!element) {
       throw new Error ("Передан пустой элемент в UserWidget");
     }
+    this.element = element;
   }
 
   /**
@@ -26,7 +27,6 @@ class UserWidget {
    * */
   update(){
     if (User.current()) {
-      console.log('Это User.current: ' + '');
       document.querySelector('.user-name').textContent = User.current();
     }
   }

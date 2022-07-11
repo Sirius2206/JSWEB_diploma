@@ -36,9 +36,6 @@ class AccountsWidget {
 
     //При нажатии на один из существующих счетов(которые отображены в боковой колонке), вызывает AccountsWidget.onSelectAccount()-
 
-
-    const accountBtn = 
-
     this.element.addEventListener('click', e => {
       const target = e.target.closest('.account');
       if (target) {
@@ -58,7 +55,6 @@ class AccountsWidget {
    * метода renderItem()
    * */
   update() {
-    console.log('---Вызван AccountsWidget.update()')
     const user = User.current();
 
     if (user) {
@@ -101,7 +97,6 @@ class AccountsWidget {
       activeAccount.classList.remove('active');
     }
     element.classList.add('active');
-    // App.showPage( 'transactions', { account_id: id_счёта });
     const accountName = element.querySelector('span').textContent;
 
     const callback = (error, response) => {
@@ -111,7 +106,6 @@ class AccountsWidget {
         const accountId = response.data.find(account => {
           return account.name === accountName;
         }).id;
-        console.log(accountId);
         App.showPage('transactions', {account_id: accountId});
       }
     };

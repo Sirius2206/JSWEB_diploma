@@ -51,8 +51,6 @@ class AsyncForm {
   }
 
   onSubmit(options) {
-    console.log("AsyncForms.onSubmit(options) called")
-    console.log(options);
   }
 
   /**

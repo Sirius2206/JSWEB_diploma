@@ -10,7 +10,6 @@ class User {
    * */
   static URL = '/user';
   static setCurrent(user) {
-    console.log("Вызван User.setCurrent:" + user.name);
     localStorage.setItem('user', user.name);
   }
 
@@ -19,7 +18,6 @@ class User {
    * пользователе из локального хранилища.
    * */
   static unsetCurrent() {
-    console.log("Вызван User.unsetCurrent");
     localStorage.removeItem('user');
   }
 
@@ -28,7 +26,6 @@ class User {
    * из локального хранилища
    * */
   static current() {
-    console.log("Вызван User.current: " + localStorage.getItem('user'));
     return localStorage.getItem('user');
   }
 
@@ -37,8 +34,6 @@ class User {
    * авторизованном пользователе.
    * */
   static fetch(callback) {
-    console.log('Вызван fetch в User.fetch');
-
     createRequest({
       method: 'GET',
       url: this.URL + '/current',
@@ -63,7 +58,6 @@ class User {
    * User.setCurrent.
    * */
   static login(data, callback) {
-    console.log(" User.login(data, callback) called")
     createRequest({
       url: this.URL + '/login',
       method: 'POST',

@@ -5,30 +5,6 @@
       "email": "demo@demo",
       "password": "demo",
       "id": "1"
-    },
-    {
-      "name": "123",
-      "email": "123@123",
-      "password": "123",
-      "id": "166m44b5gl5dxu8lk"
-    },
-    {
-      "name": "Alexander",
-      "email": "sas@sas",
-      "password": "sas",
-      "id": "166m44b5gl5dxujrs"
-    },
-    {
-      "name": "321",
-      "email": "32@32",
-      "password": "32",
-      "id": "166m44f08l5dyafot"
-    },
-    {
-      "name": "фыв",
-      "email": "sad@asd",
-      "password": "фыв",
-      "id": "166m44ox4l5dyrf55"
     }
   ],
   "accounts": [
@@ -46,41 +22,6 @@
       "name": "Бизнес",
       "user_id": "1",
       "id": "3"
-    },
-    {
-      "name": "Сбербанк",
-      "user_id": "166m44b5gl5dxu8lk",
-      "id": "166m447zcl5dy3v2r"
-    },
-    {
-      "name": "Сбербан",
-      "user_id": "166m44b5gl5dxu8lk",
-      "id": "166m447zcl5dy4n8k"
-    },
-    {
-      "name": "Сберба",
-      "user_id": "166m44b5gl5dxu8lk",
-      "id": "166m447zcl5dy56j0"
-    },
-    {
-      "name": "Сбе",
-      "user_id": "166m44b5gl5dxu8lk",
-      "id": "166m44f08l5dyarii"
-    },
-    {
-      "name": "123",
-      "user_id": "166m44ox4l5dyrf55",
-      "id": "166m447c4l5dytfiw"
-    },
-    {
-      "name": "345",
-      "user_id": "166m44ox4l5dyrf55",
-      "id": "166m44nmwl5dyvrdi"
-    },
-    {
-      "name": "Сбербанкbx",
-      "user_id": "166m44ox4l5dyrf55",
-      "id": "166m447e8l5dz0ifp"
     }
   ],
   "transactions": [

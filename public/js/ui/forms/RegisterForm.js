@@ -21,5 +21,6 @@ class RegisterForm extends AsyncForm {
       }
     }
     User.register(data, callback);
+    this.element.reset();
   }
 }

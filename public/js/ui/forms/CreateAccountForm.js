@@ -18,6 +18,7 @@ class CreateAccountForm extends AsyncForm {
       }
     }
     Account.create(data, callback);
+    this.element.reset();
   }
 }
 // Отправляет запрос на создание счёта через Account.create

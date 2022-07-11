@@ -9,6 +9,7 @@ class CreateTransactionForm extends AsyncForm {
    * */
   constructor(element) {
     super(element)
+    this.element = element;
     this.renderAccountsList();
   }
 
@@ -17,13 +18,19 @@ class CreateTransactionForm extends AsyncForm {
    * Обновляет в форме всплывающего окна выпадающий список
    * */
   renderAccountsList() {
-    console.log("CreateTransactionForm.renderAccountsList called");
+    let resultHTML ='';
+    const accSelectExp = document.getElementById('expense-accounts-list');
+    const accSelectInc = document.getElementById('income-accounts-list');
     const user = User.current();
     const callback = (error, response) => {
       if (error) {
         console.log(error);
       } else {
-        console.log(response);
+        for (let i in response.data) {
+          resultHTML += `<option value="${response.data[i].id}">${response.data[i].name}</option>`;
+        }
+        accSelectExp.innerHTML =  resultHTML;
+        accSelectInc.innerHTML =  resultHTML;
       }
     }
 
@@ -42,9 +49,12 @@ class CreateTransactionForm extends AsyncForm {
         console.log(error);
       } else {
         App.update();
+        App.getModal('newIncome')?.close();
+        App.getModal('newExpense')?.close();
       }
     }
     Transaction.create(data, callback);
+    this.element.reset()
 
   }
 }

@@ -10,10 +10,8 @@ class Account extends Entity {
   static URL = '/account';
 
   static get(id = '', callback) {
-    console.log("Account.get called");
     createRequest({
-      data: id,
-      url: this.URL + '/account/' + id,
+      url: this.URL + `/${id}`,
       method: 'GET',
       callback: callback
     });

@@ -15,12 +15,11 @@ class LoginForm extends AsyncForm {
         console.error(error);
         document.querySelector('.error-text_login').innerText = error;
       }else {
-        // this.element.reset();
         App.setState('user-logged');
         App.getModal('login').close();
       }
     }
-    console.log('User.login:::::::::::::' + data )
     User.login(data, callback);
+    this.element.reset();
   }
 }

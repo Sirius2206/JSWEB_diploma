@@ -10,7 +10,6 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static list(data, callback) {
-    console.log("Entity.list called")
     createRequest({
       url: this.URL + `?account_id=${data}`,
       method: 'GET',
@@ -24,7 +23,6 @@ class Entity {
    * что наследуется от Entity)
    * */
   static create(data, callback) {
-    console.log("Entity.create called")
     createRequest({
       data: data,
       url: this.URL,
@@ -38,7 +36,6 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static remove(data, callback) {
-    console.log("Entity.remove called")
     createRequest({
       data: data,
       url: this.URL,
