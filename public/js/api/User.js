@@ -42,9 +42,9 @@ class User {
           console.log(err);
         }
         if (response && response.user) {
-          User.setCurrent(response.user);
+          this.setCurrent(response.user);
         } else {
-          User.unsetCurrent();
+          this.unsetCurrent();
         }
         callback(err, response);
       }
@@ -79,12 +79,18 @@ class User {
    * User.setCurrent.
    * */
   static register(data, callback) {
-    console.log("Вызван register на регистрации в User.register")
     createRequest({
       data: data,
       method: 'POST',
       url: this.URL + '/register',
-      callback: callback
+      callback: (err, response) => {
+        if (err) {
+          callback(err);
+        } else {
+          this.setCurrent(response.user);
+          callback(err, response);
+        }
+      }
     });
   }
 
@@ -94,16 +100,15 @@ class User {
    * */
   static logout(callback) {
     createRequest({
-      data: User.current(),
+      data: this.current(),
       url: this.URL + '/logout',
       method: 'POST',
       callback: (err, response) => {
-        console.log(response);
         if (err) {
           callback(err);
         } else {
           this.unsetCurrent();
-          App.setState('init');
+          callback(err, response);
         }
       }
     });

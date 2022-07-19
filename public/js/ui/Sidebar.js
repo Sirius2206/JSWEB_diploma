@@ -44,7 +44,15 @@ class Sidebar {
       App.getModal('login').open();
     });
     logoutBtn.addEventListener('click', e => {
-      User.logout()
+      const callback = (err, response) => {
+        if (err) {
+          callback(err);
+        } else {
+          User.unsetCurrent();
+          App.setState('init');
+        }
+      }
+      User.logout(callback);
     });
 
   }

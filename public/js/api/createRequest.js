@@ -17,12 +17,14 @@ const createRequest = (options = {}) => {
   const xhr = new XMLHttpRequest();
   xhr.responseType = 'json';
 
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+  xhr.onload = function () {
       const resp = xhr.response;
       callback(resp?.error, resp);
-    };
   };
+
+  xhr.onerror = function() {
+    console.log("Во время обработки запроса произошла ошибка");
+  }
 
   let queryParams = '';
   const formData = new FormData();

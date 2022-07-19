@@ -10,7 +10,7 @@ class RegisterForm extends AsyncForm {
    * и закрывает окно, в котором находится форма
    * */
   onSubmit(data) {
-    function callback (error, response) {
+    const callback = (error, response) => {
       if (error) {
         console.error(error);
         document.querySelector('.error-text_register').innerText = error;
@@ -18,9 +18,9 @@ class RegisterForm extends AsyncForm {
         User.setCurrent(response.user);
         App.setState('user-logged');
         App.getModal('register').close();
+        this.element.reset();
       }
     }
     User.register(data, callback);
-    this.element.reset();
   }
 }

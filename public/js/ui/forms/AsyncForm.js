@@ -13,7 +13,7 @@ class AsyncForm {
    * через registerEvents()
    * */
   constructor(element) {
-    if (element === '') {
+    if (!element) {
       throw new Error('Передан пустой элемент');
     }
     this.element = element;
@@ -45,7 +45,6 @@ class AsyncForm {
 
     for (let [key, value] of entries) {
       result[key] = value;
-      console.log(`AsyncForm.getData() called--- ${key}: ${value}`);
     }
     return result;
   }

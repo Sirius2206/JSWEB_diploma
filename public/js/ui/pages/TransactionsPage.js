@@ -116,8 +116,6 @@ class TransactionsPage {
       if (error) {
         console.log(error);
       } else {
-        for (let i in response){
-        }
         this.renderTransactions(response.data);
       }
     });

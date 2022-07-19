@@ -19,8 +19,6 @@ class CreateTransactionForm extends AsyncForm {
    * */
   renderAccountsList() {
     let resultHTML ='';
-    const accSelectExp = document.getElementById('expense-accounts-list');
-    const accSelectInc = document.getElementById('income-accounts-list');
     const user = User.current();
     const callback = (error, response) => {
       if (error) {
@@ -29,8 +27,7 @@ class CreateTransactionForm extends AsyncForm {
         for (let i in response.data) {
           resultHTML += `<option value="${response.data[i].id}">${response.data[i].name}</option>`;
         }
-        accSelectExp.innerHTML =  resultHTML;
-        accSelectInc.innerHTML =  resultHTML;
+        this.element.querySelector(".accounts-select").innerHTML = resultHTML;
       }
     }
 
@@ -44,17 +41,17 @@ class CreateTransactionForm extends AsyncForm {
    * в котором находится форма
    * */
   onSubmit(data) {
-    function callback(error, response) {
+    const callback = (error) => {
       if (error) {
         console.log(error);
       } else {
         App.update();
         App.getModal('newIncome')?.close();
         App.getModal('newExpense')?.close();
+        this.element.reset()
       }
     }
     Transaction.create(data, callback);
-    this.element.reset()
 
   }
 }

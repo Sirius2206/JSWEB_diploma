@@ -11,7 +11,8 @@ class Entity {
    * */
   static list(data, callback) {
     createRequest({
-      url: this.URL + `?account_id=${data}`,
+      data:{account_id: data},
+      url: this.URL,
       method: 'GET',
       callback: callback
     })
